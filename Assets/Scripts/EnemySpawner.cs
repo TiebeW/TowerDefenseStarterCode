@@ -6,11 +6,13 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
 
-    private static EnemySpawner instance;
+    public static EnemySpawner instance;
 
     public List<GameObject> Path1 = new List<GameObject>();
     public List<GameObject> Path2 = new List<GameObject>();
     public List<GameObject> Enemies = new List<GameObject>();
+
+    public static EnemySpawner Get { get { return instance; } }
 
 
     private void Awake()
@@ -51,12 +53,51 @@ public class EnemySpawner : MonoBehaviour
 
         var newEnemy = Instantiate(Enemies[type], Path1[0].transform.position, Path1[0].transform.rotation);
 
-        var script = newEnemy.GetComponentInParent<UFO>();
+        var script = newEnemy.GetComponentInParent<Enemy>();
 
 
 
         // set hier het path en target voor je enemy in 
+        script.path = path;
+        script.target = Path1[1];
 
+
+
+    }
+    public GameObject RequestTarget(Enums.Path path, int index)
+    {
+        List<GameObject> currentPath = null;
+
+        switch (path)
+        {
+            case Enums.Path.Path1:
+                currentPath = Path1;
+                break;
+            case Enums.Path.Path2:
+                currentPath = Path2;
+                break;
+            default:
+                Debug.LogError("Invalid path specified!");
+                break;
+        }
+
+        if (currentPath == null)
+        {
+            Debug.LogError("Path is null!");
+            return null;
+        }
+
+        index++; // Verhoog de index voor het volgende waypoint
+
+        if (index >= currentPath.Count)
+        {
+            // Index is buiten bereik van het pad, dus vijand heeft einde van het pad bereikt
+            return null;
+        }
+        else
+        {
+            return currentPath[index];
+        }
     }
 
 

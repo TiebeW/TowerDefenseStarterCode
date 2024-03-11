@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8996355168097287853}
   - component: {fileID: 8332344551449038722}
   - component: {fileID: 4101799245273333832}
-  - component: {fileID: 738855981630081868}
+  - component: {fileID: 5312031930396945526}
   m_Layer: 0
   m_Name: UFO(1)
   m_TagString: Enemy
@@ -121,7 +121,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.00657624, y: 0.3068914}
   m_Size: {x: 0.64, y: 0.8}
   m_Direction: 0
---- !u!114 &738855981630081868
+--- !u!114 &5312031930396945526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
