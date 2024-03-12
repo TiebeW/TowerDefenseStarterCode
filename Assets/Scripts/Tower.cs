@@ -8,10 +8,11 @@ public class Tower : MonoBehaviour
     public float attackRate = 1f; // How often the tower attacks (attacks per second) 
     public int attackDamage = 1; // How much damage each attack does 
     public float attackSize = 1f; // How big the bullet looks 
+    public float projectileSpeed = 10f; //Speed of projectile
     public GameObject bulletPrefab; // The bullet prefab the tower will shoot 
-    public TowerType type; // the type of this tower 
+    public Enums.TowerType type; // the type of this tower 
 
-    private float lastAttackTime; // Time when the tower last attacked
+    private float nextAttackTime; // Time when the tower last attacked
 
     // Draw the attack range in the editor for easier debugging 
     void OnDrawGizmosSelected()
@@ -22,47 +23,45 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        if (Time.time - lastAttackTime > 1f / attackRate)
+        if (Time.time >= nextAttackTime)
         {
-            Attack();
-            lastAttackTime = Time.time;
+            ScanForEnemiesAndShoot();
+            nextAttackTime = Time.time + 1f / attackRate;
         }
     }
 
-    void Attack()
+    void ScanForEnemiesAndShoot()
     {
-        // Find all enemies within attack range
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
-        // If no enemies found, return
-        if (enemies.Length == 0)
-            return;
-
-        // Find the closest enemy within attack range
-        GameObject closestEnemy = null;
-        float closestDistance = Mathf.Infinity;
-        foreach (GameObject enemy in enemies)
+        foreach (Collider2D col in hitColliders)
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
+            if (col.CompareTag("Enemy"))
             {
-                closestEnemy = enemy;
-                closestDistance = distance;
+                ShootAtEnemy(col.gameObject);
+                break;
             }
         }
+    }
 
-        // Instantiate a bullet
+
+    void ShootAtEnemy(GameObject enemy)
+    {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
 
-        // Set bullet properties
+        bullet.transform.localScale = new Vector3(attackSize, attackSize, 1f);
+
         Projectile projectile = bullet.GetComponent<Projectile>();
+
         if (projectile != null)
         {
             projectile.damage = attackDamage;
-            projectile.target = closestEnemy.transform;
+            projectile.target = enemy.transform;
+            projectile.speed = projectileSpeed;
         }
-
-        // Set bullet scale
-        bullet.transform.localScale = new Vector3(attackSize, attackSize, 1);
+        else
+        {
+            Debug.LogError("Projectile component not found on bulletPrefab.");
+        }
     }
 }
