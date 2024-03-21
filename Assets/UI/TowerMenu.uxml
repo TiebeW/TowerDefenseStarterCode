@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/TowerMenu.uss?fileID=7433441132597879392&amp;guid=b1b23ea323fa74d49995b2fccb9f415e&amp;type=3#TowerMenu" />
     <ui:VisualElement name="VisualElement" style="height: 30%; width: 100%; background-color: rgba(0, 0, 0, 0.47); top: 60%;">
-        <ui:Button text="Archer Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="archerButton" class="button" style="left: 20%; position: absolute; top: 40%;" />
-        <ui:Button text="Sword Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="swordButton" class="button" style="position: absolute; left: 35%; top: 40%;" />
-        <ui:Button text="Wizard Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="wizardButton" class="button" style="position: absolute; left: 50%; top: 40%;" />
-        <ui:Button text="Upgrade" parse-escape-sequences="true" display-tooltip-when-elided="true" name="updateButton" class="button" style="position: absolute; top: 40%; left: 65%;" />
-        <ui:Button text="Delete" parse-escape-sequences="true" display-tooltip-when-elided="true" name="updateButton" class="button" style="position: absolute; top: 66px; left: 647px;" />
+        <ui:Button text="Archer Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="archerbutton" class="button" style="left: 20%; position: absolute; top: 40%;" />
+        <ui:Button text="Sword Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="swordbutton" class="button" style="position: absolute; left: 35%; top: 40%;" />
+        <ui:Button text="Wizard Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="wizardbutton" class="button" style="position: absolute; left: 50%; top: 40%;" />
+        <ui:Button text="Upgrade" parse-escape-sequences="true" display-tooltip-when-elided="true" name="updatebutton" class="button" style="position: absolute; top: 40%; left: 65%;" />
+        <ui:Button text="Destroy" parse-escape-sequences="true" display-tooltip-when-elided="true" name="destroybutton" class="button" style="position: absolute; top: 66px; left: 647px;" />
     </ui:VisualElement>
 </ui:UXML>

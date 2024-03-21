@@ -2,121 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance { get; private set; }
 
-    public static EnemySpawner instance;
-
-    public List<GameObject> Path1 = new List<GameObject>();
-    public List<GameObject> Path2 = new List<GameObject>();
-    public List<GameObject> Enemies = new List<GameObject>();
-
-    public static EnemySpawner Get { get { return instance; } }
-
+    public List<GameObject> Path1;
+    public List<GameObject> Path2;
+    public List<GameObject> Enemies;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void SpawnEnemy(int type, Enums.Path path)
-    {
-        Vector3 spawnPosition;
-        Quaternion spawnRotation;
-
-        if (path == Enums.Path.Path1)
-        {
-            spawnPosition = Path1[0].transform.position;
-            spawnRotation = Path1[0].transform.rotation;
-        }
-        else if (path == Enums.Path.Path2)
-        {
-            spawnPosition = Path2[0].transform.position;
-            spawnRotation = Path2[0].transform.rotation;
+            Instance = this;
         }
         else
         {
-            // Handle error or default case
-            spawnPosition = Vector3.zero;
-            spawnRotation = Quaternion.identity;
-            Debug.LogError("Invalid path specified!");
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+    private void SpawnEnemy(int type)
+    {
+        if (type < 0 || type >= Enemies.Count)
+        {
+            Debug.LogError("Invalid enemy type index.");
             return;
         }
 
-        var newEnemy = Instantiate(Enemies[type], Path1[0].transform.position, Path1[0].transform.rotation);
+        // Kies willekeurig tussen Path1 en Path2
+        PathEnum.Path randomPath = (PathEnum.Path)Random.Range(0, 2);
+        List<GameObject> selectedPath = (randomPath == PathEnum.Path.Path1) ? Path1 : Path2;
 
-        var script = newEnemy.GetComponentInParent<Enemy>();
-
-
-
-        // set hier het path en target voor je enemy in 
-        script.path = path;
-        script.target = Path1[1];
-
-
-
-    }
-    public GameObject RequestTarget(Enums.Path path, int index)
-    {
-        List<GameObject> currentPath = null;
-
-        switch (path)
+        if (selectedPath.Count == 0)
         {
-            case Enums.Path.Path1:
-                currentPath = Path1;
-                break;
-            case Enums.Path.Path2:
-                currentPath = Path2;
-                break;
-            default:
-                Debug.LogError("Invalid path specified!");
-                break;
+            Debug.LogError(randomPath.ToString() + " is not assigned or empty.");
+            return;
         }
 
-        if (currentPath == null)
-        {
-            Debug.LogError("Path is null!");
-            return null;
-        }
+        // Start bij de eerste variabele in de lijst van het gekozen pad
+        Vector3 spawnPosition = selectedPath[0].transform.position;
+        Quaternion spawnRotation = selectedPath[0].transform.rotation;
 
-        index++; // Verhoog de index voor het volgende waypoint
+        GameObject newEnemy = Instantiate(Enemies[type], spawnPosition, spawnRotation);
+        Enemy script = newEnemy.GetComponent<Enemy>();
 
-        if (index >= currentPath.Count)
-        {
-            // Index is buiten bereik van het pad, dus vijand heeft einde van het pad bereikt
-            return null;
-        }
-        else
-        {
-            return currentPath[index];
-        }
-    }
+        // Stel het pad in voor de vijand
+        script.SetPath(randomPath);
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("SpawnTester", 1f, 1f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // Start bij het eerste punt van het pad
+        script.SetTarget(selectedPath[0]);
     }
 
     private void SpawnTester()
     {
+        // Spawn een vijand
+        SpawnEnemy(0);
+    }
 
-        SpawnEnemy(0, Enums.Path.Path1);
-
+    void Start()
+    {
+        InvokeRepeating("SpawnTester", 2f, 2f);
     }
 }
