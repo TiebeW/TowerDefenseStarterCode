@@ -5,6 +5,6 @@
         <ui:Button text="Sword Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="swordbutton" class="button" style="position: absolute; left: 35%; top: 40%;" />
         <ui:Button text="Wizard Tower" parse-escape-sequences="true" display-tooltip-when-elided="true" name="wizardbutton" class="button" style="position: absolute; left: 50%; top: 40%;" />
         <ui:Button text="Upgrade" parse-escape-sequences="true" display-tooltip-when-elided="true" name="updatebutton" class="button" style="position: absolute; top: 40%; left: 65%;" />
-        <ui:Button text="Destroy" parse-escape-sequences="true" display-tooltip-when-elided="true" name="destroybutton" class="button" style="position: absolute; top: 66px; left: 647px;" />
+        <ui:Button text="Destroy" parse-escape-sequences="true" display-tooltip-when-elided="true" name="destroybutton" class="button" style="position: absolute; top: 66px; left: 77%;" />
     </ui:VisualElement>
 </ui:UXML>

@@ -53,27 +53,51 @@ public class TowerMenu : MonoBehaviour
 
     private void OnArcherButtonClicked()
     {
-        // Implement functionality for archerButton click
+        GameManager.instance.Build(PathEnum.Towers.Archer, PathEnum.SiteLevel.level1);
     }
 
     private void OnSwordButtonClicked()
     {
-        // Implement functionality for swordButton click
+        GameManager.instance.Build(PathEnum.Towers.Sword, PathEnum.SiteLevel.level1);
     }
 
     private void OnWizardButtonClicked()
     {
-        // Implement functionality for wizardButton click
+        GameManager.instance.Build(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level1);
     }
 
     private void OnUpdateButtonClicked()
     {
-        // Implement functionality for updateButton click
+        if (selectedSite == null)
+            return;
+
+        //check if the selected site has a tower type
+        if(selectedSite.TowerType == null)
+        {
+            Debug.LogWarning("Cannot upgrade site because no tower has been built");
+            return;
+        }
+
+        //increase the level of this selected site by one
+        PathEnum.SiteLevel newLevel = selectedSite.Level + 1;
+
+        //Update the site with the new level
+        GameManager.instance.Build(selectedSite.TowerType.Value, newLevel);
+
+        //update menu evaluation after upgrading
+        EvaluateMenu();
     }
 
     private void OnDestroyButtonClicked()
     {
-        // Implement functionality for destroyButton click
+        if (selectedSite == null)
+            return;
+
+        //destroy the tower on the selected site by setting its level to 0
+        selectedSite.SetTower(null, PathEnum.SiteLevel.level0, PathEnum.Towers.None);
+
+        //update menu evaluation after destroying the tower
+        EvaluateMenu();
     }
 
     private void OnDestroy()

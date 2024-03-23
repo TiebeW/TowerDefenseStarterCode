@@ -63,7 +63,7 @@ public class TileClickDetector : MonoBehaviour
 
         if (clickedTile != null)
         {
-            Debug.Log("LOL");
+            
             // Tile was clicked - you can check specific properties or tile types here 
 
             // Example: Check for a specific tile (by name, for instance) 

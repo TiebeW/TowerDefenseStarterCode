@@ -19,6 +19,24 @@ public class Enemy : MonoBehaviour
         waypoints = (path == PathEnum.Path.Path1) ? EnemySpawner.Instance.Path1 : EnemySpawner.Instance.Path2;
     }
 
+    public void Damage(int damage)
+
+    {
+
+        // lower the health value 
+        health -= damage;
+
+
+        // if health is smaller or equal to zero 
+        if(health <= 0)
+        {
+            // destroy the game object 
+            Destroy(gameObject);
+        }
+
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
