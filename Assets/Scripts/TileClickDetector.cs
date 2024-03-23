@@ -78,11 +78,7 @@ public class TileClickDetector : MonoBehaviour
                         break;
                     }
                 }
-                if (SelectedSite != null && GameManager.instance != null)
-                {
-                    // Open het menu wanneer een site is geselecteerd
-
-                }
+               
             }
             else
             {
