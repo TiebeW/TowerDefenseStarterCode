@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +11,7 @@ public class Enemy : MonoBehaviour
     public List<GameObject> waypoints;
     private int currentWaypointIndex = 0;
 
-    // Set het pad voor de vijand
+    // Set the path for the enemy
     public void SetPath(PathEnum.Path newPath)
     {
         path = newPath;
@@ -20,21 +19,19 @@ public class Enemy : MonoBehaviour
     }
 
     public void Damage(int damage)
-
     {
-
-        // lower the health value 
+        // Decrease the health value
         health -= damage;
 
-
-        // if health is smaller or equal to zero 
-        if(health <= 0)
+        // If health is smaller or equal to zero
+        if (health <= 0)
         {
-            // destroy the game object 
+            // Call AddCredits function of GameManager
+            GameManager.instance.AddCredits(points);
+
+            // Destroy the game object
             Destroy(gameObject);
         }
-
-
     }
 
     // Start is called before the first frame update
@@ -43,7 +40,7 @@ public class Enemy : MonoBehaviour
         SetTarget(waypoints[currentWaypointIndex]);
     }
 
-    // Set het doelwit voor de vijand
+    // Set the target for the enemy
     public void SetTarget(GameObject newTarget)
     {
         currentWaypointIndex = waypoints.IndexOf(newTarget);
@@ -58,10 +55,10 @@ public class Enemy : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, step);
 
-        // Controleer of de vijand het doelwit heeft bereikt
+        // Check if the enemy has reached the target
         if (Vector2.Distance(transform.position, waypoints[currentWaypointIndex].transform.position) < 0.1f)
         {
-            // Ga naar het volgende waypoint als deze beschikbaar is
+            // Go to the next waypoint if available
             if (currentWaypointIndex < waypoints.Count - 1)
             {
                 currentWaypointIndex++;
@@ -69,7 +66,10 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                // Als alle waypoints zijn bereikt, vernietig de vijand
+                // Call AttackGate function of GameManager
+                GameManager.instance.AttackGate();
+
+                // If all waypoints are reached, destroy the enemy
                 Destroy(gameObject);
             }
         }

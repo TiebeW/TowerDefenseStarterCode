@@ -714,6 +714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d69f9f8db10fb3478184cf00b1e0147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creditsLabel: {fileID: 0}
+  healthLabel: {fileID: 0}
+  waveLabel: {fileID: 0}
 --- !u!1 &1102024298
 GameObject:
   m_ObjectHideFlags: 0
@@ -6021,6 +6024,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853458330}
   - component: {fileID: 1853458329}
+  - component: {fileID: 1853458332}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6052,6 +6056,7 @@ MonoBehaviour:
   - {fileID: 6679365805160506445, guid: 9a83a2c476980c849903fc9478a2f047, type: 3}
   - {fileID: 8881459343414960118, guid: 0abf99c9ad90eb148814a8de3165586f, type: 3}
   - {fileID: 852277376297755939, guid: bf3fc11cb964e3c4dbbdc935798f7bc1, type: 3}
+  topMenu: {fileID: 0}
   menu: {fileID: 926125882}
 --- !u!4 &1853458330
 Transform:
@@ -6068,6 +6073,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1853458332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853458328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d69f9f8db10fb3478184cf00b1e0147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creditsLabel: {fileID: 0}
+  healthLabel: {fileID: 0}
+  waveLabel: {fileID: 0}
 --- !u!1 &1869446739
 GameObject:
   m_ObjectHideFlags: 0
