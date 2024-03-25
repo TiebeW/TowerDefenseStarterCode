@@ -1,59 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class NewTopMenu : MonoBehaviour
+public class Tower : MonoBehaviour
 {
-    public Label waveLabel;
-    public Label creditsLabel;
-    public Label healthLabel;
-    public Button startWaveButton;
+    public float attackRange = 1f; // Range within which the tower can detect and attack enemies 
+    public float attackRate = 1f; // How often the tower attacks (attacks per second) 
+    public int attackDamage = 1; // How much damage each attack does 
+    public float attackSize = 1f; // How big the bullet looks 
+    public float projectileSpeed = 10f; //Speed of projectile
+    public GameObject bulletPrefab; // The bullet prefab the tower will shoot 
+    public PathEnum.Towers type; // the type of this tower 
 
-    private int currentWave = 1;
-    private int playerCredits = 100;
-    private int gateHealth = 100;
+    private float nextAttackTime; // Time when the tower last attacked
 
-    void Start()
+    // Draw the attack range in the editor for easier debugging 
+    void OnDrawGizmosSelected()
     {
-        // Zoek de button en voeg een click event listener toe
-        startWaveButton.clicked += StartWave;
-
-        // Update de labels
-        UpdateLabels();
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    void OnDestroy()
+    void Update()
     {
-        // Verwijder de click event listener om memory leaks te voorkomen
-        startWaveButton.clicked -= StartWave;
-    }
-
-    void UpdateLabels()
-    {
-        // Update de tekst van de labels
-        waveLabel.text = "Wave: " + currentWave.ToString();
-        creditsLabel.text = "Credits: " + playerCredits.ToString();
-        healthLabel.text = "Gate Health: " + gateHealth.ToString();
-    }
-
-    void StartWave()
-    {
-        // Verminder credits bij het starten van een nieuwe wave
-        int waveCost = 10; // bijvoorbeeld
-        if (playerCredits >= waveCost)
+        if (Time.time >= nextAttackTime)
         {
-            playerCredits -= waveCost; // Verminder credits
-            currentWave++; // Verhoog de huidige wave
+            ScanForEnemiesAndShoot();
+            nextAttackTime = Time.time + 1f / attackRate;
+        }
+    }
 
-            // Update de labels om de veranderingen weer te geven
-            UpdateLabels();
+    void ScanForEnemiesAndShoot()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
-            // Hier kun je verdere logica toevoegen om de wave daadwerkelijk te starten
-            Debug.Log("Wave " + currentWave.ToString() + " is gestart!");
+        foreach (Collider2D col in hitColliders)
+        {
+            if (col.CompareTag("Enemy"))
+            {
+                ShootAtEnemy(col.gameObject);
+                break;
+            }
+        }
+    }
+
+
+    void ShootAtEnemy(GameObject enemy)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+
+        bullet.transform.localScale = new Vector3(attackSize, attackSize, 1f);
+
+        Projectile projectile = bullet.GetComponent<Projectile>();
+
+        if (projectile != null)
+        {
+            projectile.damage = attackDamage;
+            projectile.target = enemy.transform;
+            projectile.speed = projectileSpeed;
         }
         else
         {
-            Debug.Log("Je hebt niet genoeg credits om een nieuwe wave te starten!");
+            Debug.LogError("Projectile component not found on bulletPrefab.");
         }
     }
-
 }

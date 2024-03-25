@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3178129349666220128}
   - component: {fileID: 4181978424175191977}
-  - component: {fileID: 4931493290843981251}
+  - component: {fileID: 3196904301004815981}
   m_Layer: 0
   m_Name: archer_level_2
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4931493290843981251
+--- !u!114 &3196904301004815981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 5
   attackRate: 5
-  attackDamage: 10
-  attackSize: 10
+  attackDamage: 5
+  attackSize: 1
   projectileSpeed: 10
   bulletPrefab: {fileID: 5485215287815288344, guid: ee2e8f40d8fc7b04b82d14a598da7ae8, type: 3}
   type: 1

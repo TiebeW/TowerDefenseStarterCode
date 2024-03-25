@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5356316736090764536}
   - component: {fileID: 3410073842423849835}
-  - component: {fileID: 476086296833556827}
+  - component: {fileID: -5129033297157723191}
   m_Layer: 0
   m_Name: barrack_level_2 (1)
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &476086296833556827
+--- !u!114 &-5129033297157723191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea32e9db611b0454c8404338f739bb70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 3
-  attackRate: 6
+  attackRange: 5
+  attackRate: 5
   attackDamage: 5
-  attackSize: 5
+  attackSize: 1
   projectileSpeed: 10
   bulletPrefab: {fileID: 6318076108236684154, guid: ddd0e2adbae850448acdcc2285e93c85, type: 3}
-  type: 1
+  type: 2

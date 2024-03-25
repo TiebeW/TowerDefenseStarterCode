@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5626103481619606021}
   - component: {fileID: 3538595781516856767}
-  - component: {fileID: 2358467072129529118}
+  - component: {fileID: 6388464871650476696}
   m_Layer: 0
   m_Name: wizard_level_1
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2358467072129529118
+--- !u!114 &6388464871650476696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea32e9db611b0454c8404338f739bb70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
-  attackRate: 1
-  attackDamage: 4
-  attackSize: 3
+  attackRange: 5
+  attackRate: 5
+  attackDamage: 5
+  attackSize: 1
   projectileSpeed: 10
   bulletPrefab: {fileID: 4896291478093686179, guid: f6a8ef3a13f70944780aafdb2b3646fe, type: 3}
   type: 3
