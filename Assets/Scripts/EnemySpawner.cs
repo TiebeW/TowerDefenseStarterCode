@@ -10,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> Path2;
     public List<GameObject> Enemies;
 
+    private int ufoCounter = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -55,14 +57,34 @@ public class EnemySpawner : MonoBehaviour
         script.SetTarget(selectedPath[0]);
     }
 
-    private void SpawnTester()
-    {
-        // Spawn een vijand
-        SpawnEnemy(0);
-    }
-
     void Start()
     {
-        InvokeRepeating("SpawnTester", 2f, 2f);
+        InvokeRepeating("SpawnEnemy", 2f, 2f);
+    }
+
+    public void StartWave(int number)
+
+    {
+
+        // reset counter 
+
+        ufoCounter = 0;
+
+
+
+        switch (number)
+
+        {
+
+            case 1:
+
+                InvokeRepeating("StartWave1", 1f, 1.5f);
+
+                break;
+
+
+
+        }
+
     }
 }

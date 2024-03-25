@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public TopMenu topMenu;
 
+    private bool waveActive = false;
+
     void Start()
     {
         StartGame();
@@ -29,9 +31,35 @@ public class GameManager : MonoBehaviour
         health = 10;
         currentWave = 0;
 
+        // Ensure waveActive is set to false
+        waveActive = false;
+
         // Update the labels in the TopMenu
         UpdateLabels();
     }
+
+    public void StartWave()
+    {
+        // Verhoog de waarde van currentWave
+        currentWave++;
+
+        // Verander het label voor de huidige golf in topMenu
+        topMenu.SetWaveLabel("Wave: " + currentWave);
+
+        // Verander waveActive naar true
+        waveActive = true;
+
+        // Voeg hier verdere logica toe voor het starten van de golf, zoals het spawnen van vijanden, etc.
+    }
+
+    public void EndWave()
+    {
+        // Verander waveActive naar false
+        waveActive = false;
+
+        // Voeg hier verdere logica toe voor het einde van de golf, zoals het stoppen van vijanden, etc.
+    }
+
 
     void UpdateLabels()
     {

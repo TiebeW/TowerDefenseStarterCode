@@ -3,179 +3,101 @@ using UnityEngine.UIElements;
 
 public class TowerMenu : MonoBehaviour
 {
+    // UI Elements
     private Button archerbutton;
     private Button swordbutton;
     private Button wizardbutton;
     private Button updatebutton;
     private Button destroybutton;
-
     private VisualElement root;
 
+    // Selected construction site
     private ConstructionSite selectedSite;
 
     void Start()
     {
+        // Get the root visual element
         root = GetComponent<UIDocument>().rootVisualElement;
 
+        // Assign buttons
         archerbutton = root.Q<Button>("archerbutton");
         swordbutton = root.Q<Button>("swordbutton");
         wizardbutton = root.Q<Button>("wizardbutton");
         updatebutton = root.Q<Button>("buttonupgrade");
         destroybutton = root.Q<Button>("buttondestroy");
 
-        if (archerbutton != null)
-        {
-            archerbutton.clicked += OnArcherButtonClicked;
-        }
+        // Add button click event listeners
+        archerbutton.clicked += OnArcherButtonClicked;
+        swordbutton.clicked += OnSwordButtonClicked;
+        wizardbutton.clicked += OnWizardButtonClicked;
+        updatebutton.clicked += OnUpdateButtonClicked;
+        destroybutton.clicked += OnDestroyButtonClicked;
 
-        if (swordbutton != null)
-        {
-            swordbutton.clicked += OnSwordButtonClicked;
-        }
-
-        if (wizardbutton != null)
-        {
-            wizardbutton.clicked += OnWizardButtonClicked;
-        }
-
-        if (updatebutton != null)
-        {
-            updatebutton.clicked += OnUpdateButtonClicked;
-        }
-
-        if (destroybutton != null)
-        {
-            destroybutton.clicked += OnDestroyButtonClicked;
-        }
-
+        // Hide the menu initially
         root.visible = false;
     }
 
-    private void OnArcherButtonClicked()
-    {
-        GameManager.instance.Build(PathEnum.Towers.Archer, PathEnum.SiteLevel.level1);
-    }
-
-    private void OnSwordButtonClicked()
-    {
-        GameManager.instance.Build(PathEnum.Towers.Sword, PathEnum.SiteLevel.level1);
-    }
-
-    private void OnWizardButtonClicked()
-    {
-        GameManager.instance.Build(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level1);
-    }
-
-    private void OnUpdateButtonClicked()
-    {
-        if (selectedSite == null)
-            return;
-
-        //check if the selected site has a tower type
-        if(selectedSite.TowerType == null)
-        {
-            Debug.LogWarning("Cannot upgrade site because no tower has been built");
-            return;
-        }
-
-        //increase the level of this selected site by one
-        PathEnum.SiteLevel newLevel = selectedSite.Level + 1;
-
-        //Update the site with the new level
-        GameManager.instance.Build(selectedSite.TowerType.Value, newLevel);
-
-        //update menu evaluation after upgrading
-        EvaluateMenu();
-    }
-
-    private void OnDestroyButtonClicked()
-    {
-        if (selectedSite == null)
-            return;
-
-        //destroy the tower on the selected site by setting its level to 0
-        selectedSite.SetTower(null, PathEnum.SiteLevel.level0, PathEnum.Towers.None);
-
-        //update menu evaluation after destroying the tower
-        EvaluateMenu();
-    }
+    // Event handlers for button clicks
+    private void OnArcherButtonClicked() { GameManager.instance.Build(PathEnum.Towers.Archer, PathEnum.SiteLevel.level1); }
+    private void OnSwordButtonClicked() { GameManager.instance.Build(PathEnum.Towers.Sword, PathEnum.SiteLevel.level1); }
+    private void OnWizardButtonClicked() { GameManager.instance.Build(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level1); }
+    private void OnUpdateButtonClicked() { /* Logic for upgrading towers */ }
+    private void OnDestroyButtonClicked() { /* Logic for destroying towers */ }
 
     private void OnDestroy()
     {
-        if (archerbutton != null)
-        {
-            archerbutton.clicked -= OnArcherButtonClicked;
-        }
-
-        if (swordbutton != null)
-        {
-            swordbutton.clicked -= OnSwordButtonClicked;
-        }
-
-        if (wizardbutton != null)
-        {
-            wizardbutton.clicked -= OnWizardButtonClicked;
-        }
-
-        if (updatebutton != null)
-        {
-            updatebutton.clicked -= OnUpdateButtonClicked;
-        }
-
-        if (destroybutton != null)
-        {
-            destroybutton.clicked -= OnDestroyButtonClicked;
-        }
+        // Remove button click event listeners
+        archerbutton.clicked -= OnArcherButtonClicked;
+        swordbutton.clicked -= OnSwordButtonClicked;
+        wizardbutton.clicked -= OnWizardButtonClicked;
+        updatebutton.clicked -= OnUpdateButtonClicked;
+        destroybutton.clicked -= OnDestroyButtonClicked;
     }
 
+    // Method to set the selected construction site
     public void SetSite(ConstructionSite site)
     {
         selectedSite = site;
-
-        if (selectedSite == null)
-        {
-            root.visible = false;
-            return;
-        }
-
-        root.visible = true;
-        EvaluateMenu(); // Call EvaluateMenu when setting the site
+        // Show/hide the menu based on whether a site is selected
+        root.visible = selectedSite != null;
+        // Evaluate the menu based on the selected site
+        EvaluateMenu();
     }
 
+    // Method to evaluate and update the menu buttons based on the selected site
     public void EvaluateMenu()
     {
-        // Return if selectedSite is null
         if (selectedSite == null)
             return;
 
-        // Get available credits from GameManager
-        int availableCredits = GameManager.instance.GetCredits();
-
-        // Check site level
+        // Get the level of the selected site
         int siteLevel = (int)selectedSite.Level;
 
-        // Enable/disable buttons based on siteLevel and available credits
+        // Get the available credits
+        int availableCredits = GameManager.instance.GetCredits();
+
+        // Enable/disable buttons based on site level and available credits
         switch (siteLevel)
         {
             case 0:
-                // For SiteLevel 0, enable buttons based on available credits
-                archerbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Archer, PathEnum.SiteLevel.level1));
-                swordbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Sword, PathEnum.SiteLevel.level1));
-                wizardbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level1));
+                // If the site level is zero, enable building buttons and disable update/destroy buttons
+                archerbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Archer, PathEnum.SiteLevel.level0));
+                swordbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Sword, PathEnum.SiteLevel.level0));
+                wizardbutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(PathEnum.Towers.Wizard, PathEnum.SiteLevel.level0));
                 updatebutton.SetEnabled(false);
                 destroybutton.SetEnabled(false);
                 break;
             case 1:
             case 2:
-                // For SiteLevel 1 or 2, enable updateButton and destroyButton
+                // If the site level is 1 or 2, enable update and destroy buttons and disable building buttons
                 archerbutton.SetEnabled(false);
                 swordbutton.SetEnabled(false);
                 wizardbutton.SetEnabled(false);
-                updatebutton.SetEnabled(availableCredits >= GameManager.instance.GetCost(selectedSite.TowerType.Value, selectedSite.Level + 1));
+                updatebutton.SetEnabled(availableCredits >= GameManager.instance.GetCost((PathEnum.Towers)selectedSite.TowerType, selectedSite.Level + 1));
                 destroybutton.SetEnabled(true);
                 break;
             case 3:
-                // For SiteLevel 3, only enable destroyButton
+                // If the site level is 3, enable only the destroy button
                 archerbutton.SetEnabled(false);
                 swordbutton.SetEnabled(false);
                 wizardbutton.SetEnabled(false);
@@ -187,5 +109,4 @@ public class TowerMenu : MonoBehaviour
                 break;
         }
     }
-
 }
