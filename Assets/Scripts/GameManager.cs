@@ -238,4 +238,11 @@ public class GameManager : MonoBehaviour
         menu.GetComponent<TowerMenu>().SetSite(null);
     }
 
+    // Inside GameManager class
+    public int GetGateHealth()
+    {
+        return health;
+    }
+
+
 }
