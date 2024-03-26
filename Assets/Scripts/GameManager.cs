@@ -40,25 +40,34 @@ public class GameManager : MonoBehaviour
 
     public void StartWave()
     {
-        // Verhoog de waarde van currentWave
+        // Increase the value of currentWave
         currentWave++;
 
-        // Verander het label voor de huidige golf in topMenu
+        // Change the label for the current wave in topMenu
         topMenu.SetWaveLabel("Wave: " + currentWave);
 
-        // Verander waveActive naar true
+        // Change waveActive to true
         waveActive = true;
 
-        // Voeg hier verdere logica toe voor het starten van de golf, zoals het spawnen van vijanden, etc.
+        // Call the StartWave function of EnemySpawner and pass the currentWave value
+        EnemySpawner.Instance.StartWave(currentWave); // Pass the currentWave value
+
+        // Call any other methods or perform any actions related to starting a wave
     }
+
+
 
     public void EndWave()
     {
-        // Verander waveActive naar false
+        // Change waveActive to false
         waveActive = false;
 
-        // Voeg hier verdere logica toe voor het einde van de golf, zoals het stoppen van vijanden, etc.
+        // Call the EnableWaveButton function of TopMenu through the GameManager instance
+        GameManager.instance.topMenu.EnableWaveButton();
+
+        // Call any other methods or perform any actions related to ending a wave
     }
+
 
 
     void UpdateLabels()
