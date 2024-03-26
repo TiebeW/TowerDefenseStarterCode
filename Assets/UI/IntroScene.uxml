@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="Tower Defense:The Game" parse-escape-sequences="true" display-tooltip-when-elided="true" style="align-self: center;" />
+        <ui:Button text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="startButton" />
+        <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quitButton" />
+        <ui:TextField picking-mode="Ignore" label="Player Name" />
+    </ui:VisualElement>
+</ui:UXML>
